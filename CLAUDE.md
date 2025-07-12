@@ -9,13 +9,14 @@ updated_at: 2025-06-20
 
 ## プロジェクト概要
 
-このプロジェクトは、AIエージェントでの開発に最適化されたPythonプロジェクトテンプレートです。
-厳格な型チェック、自動化されたコード品質管理、CIに加えて、GitHub CLIを使用したGitHub操作をサポートします。
-また、AIエージェントとの協働をサポートするためのドキュメントも提供します。
+このプロジェクトは、検索・情報取得システムの性能評価を行うためのメトリクス・評価フレームワークです。
+AIエージェントでの開発に最適化されており、厳格な型チェック、自動化されたコード品質管理、CIに加えて、GitHub CLIを使用したGitHub操作をサポートします。
 
-**重要**: プロジェクト初期化時のTODO:
-- [ ] この項目（「プロジェクト概要」セクション）をプロジェクトに特化したものに更新
-- [ ] このTODOを削除する
+このフレームワークは以下の機能を提供します：
+- 検索結果の関連性評価
+- レスポンス時間・スループット測定
+- 検索品質メトリクスの計算・可視化
+- 複数の検索エンジン・情報検索システムとの統合
 
 ## 技術スタック
 
@@ -60,8 +61,9 @@ project-root/
 │       │   └── test_example.py
 │       └── conftest.py          # pytestフィクスチャの例
 ├── src/                         # 実際の開発用ディレクトリ
-│       └── project_name/    # モデルパッケージの完全な実装例
-│           └── （プロジェクト固有のパッケージを配置）
+│       └── retrieval_metrics/  # メインパッケージ
+│           ├── __init__.py     # パッケージエクスポート
+│           └── schemas.py      # データ構造・スキーマ定義
 ├── tests/                       # 実際のテスト用ディレクトリ
 │   ├── unit/                    # 単体テスト
 │   ├── integration/             # 統合テスト
@@ -165,7 +167,7 @@ uv run bandit -r src/        # セキュリティチェック（bandit）
 uv run pip-audit             # 依存関係の脆弱性チェック（pip-audit）
 
 # 統合チェック
-make check                  # format, lint, typecheck, testを順番に実行
+uv run task check                  # format + lint + typecheck + test の統合実行
 uv run pre-commit run --all-files  # pre-commitで全ファイルをチェック
 
 # GitHub操作
@@ -178,7 +180,7 @@ uv run task help                   # 利用可能なコマンド一覧
 
 # 依存関係の追加
 uv sync --all-extras               # 全依存関係を同期
-uv add package_name                # ランタイム依存関係
+uv add package_name                # ランタイム依存関係  
 uv add --dev dev_package_name      # 開発依存関係
 uv lock --upgrade                  # 依存関係を更新
 ```

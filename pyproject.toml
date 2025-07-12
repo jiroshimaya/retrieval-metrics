@@ -1,5 +1,5 @@
 [project]
-name = "project-name"
+name = "retrieval-metrics"
 dynamic = ["version"]
 description = "A modern Python project template optimized for Claude Code with strict guardrails"
 readme = "README.md"
@@ -39,7 +39,7 @@ source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 # TODO: 実際のプロジェクトでは "src/your_package_name" に更新してください
-packages = ["src/project_name"]  # テンプレート用の空パッケージ
+packages = ["src/retrieval_metrics"]  # テンプレート用の空パッケージ
 
 [tool.ruff]
 line-length = 88
@@ -131,19 +131,21 @@ dev = [
 # taskipy タスク定義
 # =====================
 [tool.taskipy.tasks]
-clean = "\
-  find . -type d -name '__pycache__' -exec rm -rf {} + && \
-  find . -type f -name '*.pyc' -delete && \
-  find . -type d -name '.pytest_cache' -exec rm -rf {} + && \
-  find . -type d -name '.mypy_cache' -exec rm -rf {} + && \
-  find . -type d -name '.ruff_cache' -exec rm -rf {} + && \
-  find . -type d -name 'htmlcov' -exec rm -rf {} + && \
-  find . -type f -name '.coverage' -delete && \
-  rm -rf dist build"
+clean = """
+  find . -type d -name '__pycache__' -exec rm -rf {} + &&
+  find . -type f -name '*.pyc' -delete &&
+  find . -type d -name '.pytest_cache' -exec rm -rf {} + &&
+  find . -type d -name '.mypy_cache' -exec rm -rf {} + &&
+  find . -type d -name '.ruff_cache' -exec rm -rf {} + &&
+  find . -type d -name 'htmlcov' -exec rm -rf {} + &&
+  find . -type f -name '.coverage' -delete &&
+  rm -rf dist build
+"""
 help = "echo '利用可能なタスク: clean, check, help (task [name] で実行)'"
-check = "\
-  ARGS=\"${args:-.}\"; \
-  uv run ruff format $ARGS && \
-  uv run ruff check $ARGS --fix && \
-  uv run mypy $ARGS --strict && \
-  uv run pytest $ARGS"
+check = """
+  ARGS="${args:-.}"
+  uv run ruff format $ARGS &&
+  uv run ruff check $ARGS --fix &&
+  uv run mypy $ARGS --strict &&
+  uv run pytest $ARGS
+"""

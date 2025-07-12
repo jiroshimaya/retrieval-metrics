@@ -255,15 +255,15 @@ export CLAUDE_VERBOSE=true           # 詳細出力
 
 ```bash
 # 新しいリポジトリをクローン
-git clone https://github.com/yourusername/project-name.git
-cd project-name
+git clone https://github.com/yourusername/retrieval-metrics.git
+cd retrieval-metrics
 
 # セットアップ
 make setup
 ```
 
 セットアップスクリプトは以下を実行します：
-- すべての `project_name` を実際のプロジェクト名に更新（途中でプロジェクト名を入力するように求められます）
+- すべての `retrieval_metrics` を実際のプロジェクト名に更新（途中でプロジェクト名を入力するように求められます）
 - uvを使用してPython環境を初期化
 - Claude Codeをインストール
 - GitHub CLI（`gh`）をインストール（途中でログインを求められます）
@@ -277,7 +277,7 @@ make setup
 
 ```bash
 # プロジェクト名を更新
-python scripts/update_project_name.py your_project_name
+python scripts/update_retrieval_metrics.py your_retrieval_metrics
 
 # uvをインストール（まだインストールしていない場合）
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -354,7 +354,7 @@ project-root/
 │       │   └── test_example.py
 │       └── conftest.py          # pytestフィクスチャの例
 ├── src/                         # 実際の開発用ディレクトリ
-│       └── project_name/    # モデルパッケージの完全な実装例
+│       └── retrieval_metrics/    # モデルパッケージの完全な実装例
 │           └── （プロジェクト固有のパッケージを配置）
 ├── tests/                       # 実際のテスト用ディレクトリ
 │   ├── unit/                    # 単体テスト
@@ -412,7 +412,7 @@ warn_unused_configs = true
 
 # 段階的により厳格な設定を有効化
 [[tool.mypy.overrides]]
-module = ["project_name.core.*"]
+module = ["retrieval_metrics.core.*"]
 strict = true  # まずコアモジュールにstrictモードを適用
 ```
 
