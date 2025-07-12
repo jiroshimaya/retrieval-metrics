@@ -180,7 +180,7 @@ uv run task help                   # 利用可能なコマンド一覧
 
 # 依存関係の追加
 uv sync --all-extras               # 全依存関係を同期
-uv add package_name                # ランタイム依存関係  
+uv add package_name                # ランタイム依存関係
 uv add --dev dev_package_name      # 開発依存関係
 uv lock --upgrade                  # 依存関係を更新
 ```
