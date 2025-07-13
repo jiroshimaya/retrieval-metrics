@@ -7,7 +7,7 @@ def _mask_ranks(ranks_list: list[list[int]], k: int) -> list[list[int]]:
     """kより悪い順位を-1にする"""
     if k < 1:
         return ranks_list
-    
+
     masked_ranks_list = []
     for ranks in ranks_list:
         # kより悪い順位は-1にする
@@ -19,6 +19,7 @@ def _mask_ranks(ranks_list: list[list[int]], k: int) -> list[list[int]]:
                 masked_ranks.append(rank)
         masked_ranks_list.append(masked_ranks)
     return masked_ranks_list
+
 
 def _ranks_to_run_qrels(
     ranks_list: list[list[int]], k: int = -1
@@ -32,11 +33,7 @@ def _ranks_to_run_qrels(
     for qid, ranks in enumerate(ranks_list):
         run[str(qid)] = {}
         qrels[str(qid)] = {}
-        max_rank = 0
-        if k < 1:
-            max_rank = max(ranks)
-        else:
-            max_rank = min(max(ranks), k)
+        max_rank = max(ranks) if k < 0 else min(max(max(ranks), 0), k)
 
         for doc_id in range(1, max_rank + 1):
             # runを作る。doc_idは1からmax_rankまでで、doc1が1位でdoc{max_rank}が最下位

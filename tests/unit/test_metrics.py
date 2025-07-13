@@ -59,7 +59,18 @@ class TestRanksToRunQrels:
             "doc7": 1,
         }  # 3,4,5位のdocの関連度が1
 
+    def test_正常系_k指定の変換(self) -> None:
+        """k指定がある場合のランキング変換を確認。"""
+        ranks_list = [[1, 2, 3], [4, 5, -1]]
+        k = 2
 
+        run, qrels = _ranks_to_run_qrels(ranks_list, k)
+
+        # k=2なので、各クエリの最大ランクは2
+        assert run["0"] == {"doc1": 2, "doc2": 1}
+        assert run["1"] == {}
+        assert qrels["0"] == {"doc1": 1, "doc2": 1, "doc3": 1}
+        assert qrels["1"] == {"doc1": 1, "doc2": 1, "doc3": 1}
 class TestCalculateRetrievalMetrics:
     """Test calculate_retrieval_metrics function."""
 
