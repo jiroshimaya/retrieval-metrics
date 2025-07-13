@@ -3,16 +3,40 @@
 import ranx as rx
 
 
+def _mask_ranks(ranks_list: list[list[int]], k: int) -> list[list[int]]:
+    """kより悪い順位を-1にする"""
+    if k < 1:
+        return ranks_list
+    
+    masked_ranks_list = []
+    for ranks in ranks_list:
+        # kより悪い順位は-1にする
+        masked_ranks = []
+        for rank in ranks:
+            if rank > k:
+                masked_ranks.append(-1)
+            else:
+                masked_ranks.append(rank)
+        masked_ranks_list.append(masked_ranks)
+    return masked_ranks_list
+
 def _ranks_to_run_qrels(
-    ranks_list: list[list[int]],
+    ranks_list: list[list[int]], k: int = -1
 ) -> tuple[dict[str, dict[str, int]], dict[str, dict[str, int]]]:
     """Convert ranks_list to ranx format."""
     run: dict[str, dict[str, int]] = {}
     qrels: dict[str, dict[str, int]] = {}
+
+    ranks_list = _mask_ranks(ranks_list, k)
+
     for qid, ranks in enumerate(ranks_list):
         run[str(qid)] = {}
         qrels[str(qid)] = {}
-        max_rank = max(ranks) if ranks else 0
+        max_rank = 0
+        if k < 1:
+            max_rank = max(ranks)
+        else:
+            max_rank = min(max(ranks), k)
 
         for doc_id in range(1, max_rank + 1):
             # runを作る。doc_idは1からmax_rankまでで、doc1が1位でdoc{max_rank}が最下位
@@ -31,7 +55,7 @@ def _ranks_to_run_qrels(
 
 
 def calculate_retrieval_metrics(
-    ranks_list: list[list[int]], metrics: list[str]
+    ranks_list: list[list[int]], metrics: list[str], k: int = -1
 ) -> dict[str, float]:
     """Calculate retrieval metrics using ranx library.
 
@@ -55,7 +79,7 @@ def calculate_retrieval_metrics(
     >>> print(results)
     {'map@3': 1.0, 'ndcg@3': 1.0}
     """
-    run, qrels = _ranks_to_run_qrels(ranks_list)
+    run, qrels = _ranks_to_run_qrels(ranks_list, k)
     scores = rx.evaluate(qrels, run, metrics=metrics)
 
     # ranxは単一メトリックの場合は値のみ、複数メトリックの場合は辞書を返すため統一
