@@ -49,6 +49,11 @@ def _ranks_to_run_qrels(
             # runには含まれないが、qrelsには関連性1の文書を追加
             qrels[str(qid)][f"doc{max_rank + i}"] = 1
 
+        if not run[str(qid)]:
+            run[str(qid)] = {"dummy_run": 0}  # 少なくとも1つの文書を含める
+        if not qrels[str(qid)]:
+            qrels[str(qid)] = {"dummy_qrel": 0}
+
     return run, qrels
 
 
