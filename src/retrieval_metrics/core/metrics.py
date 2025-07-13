@@ -1,9 +1,11 @@
 """Core retrieval metrics calculation functionality."""
 
-import ranx as rx  # type: ignore[import-untyped]
+import ranx as rx
 
 
-def _ranks_to_run_qrels(ranks_list: list[list[int]]) -> tuple[dict[str, dict[str, int]], dict[str, dict[str, int]]]:
+def _ranks_to_run_qrels(
+    ranks_list: list[list[int]],
+) -> tuple[dict[str, dict[str, int]], dict[str, dict[str, int]]]:
     """Convert ranks_list to ranx format."""
     run: dict[str, dict[str, int]] = {}
     qrels: dict[str, dict[str, int]] = {}
@@ -66,6 +68,7 @@ def calculate_retrieval_metrics(
 def get_supported_metrics() -> list[str]:
     """Get list of supported metric names."""
     return ["map", "mrr", "ndcg", "precision", "recall", "hits", "hit_rate"]
+
 
 if __name__ == "__main__":
     # Example usage
