@@ -30,7 +30,9 @@ class TestRanksToRunQrels:
         # max_rank個の文書に関するrunができる。doc{n}がn番めに大きいスコアになっている。
         assert run == {"0": {"doc1": 2, "doc2": 1}}
         # 2位のdoc（doc2）のみ関連性1
-        assert qrels == {"0": {"doc2": 1, "doc3": 1, "doc4":1}}  # doc3はランク外だが関連性1として追加
+        assert qrels == {
+            "0": {"doc2": 1, "doc3": 1, "doc4": 1}
+        }  # doc3はランク外だが関連性1として追加
 
     def test_正常系_複数クエリの変換(self) -> None:
         """複数クエリのランキングが正しく変換されることを確認。"""
@@ -39,10 +41,23 @@ class TestRanksToRunQrels:
         run, qrels = _ranks_to_run_qrels(ranks_list)
 
         # クエリ数の確認
-        assert run["0"] == {"doc1": 2, "doc2": 1}  # max_rank=2なので2個のdocの結果を生成
-        assert run["1"] == {"doc1": 5, "doc2": 4, "doc3": 3, "doc4": 2, "doc5": 1} # max_rank=5なので5個のdocの結果を生成
+        assert run["0"] == {
+            "doc1": 2,
+            "doc2": 1,
+        }  # max_rank=2なので2個のdocの結果を生成
+        assert run["1"] == {
+            "doc1": 5,
+            "doc2": 4,
+            "doc3": 3,
+            "doc4": 2,
+            "doc5": 1,
+        }  # max_rank=5なので5個のdocの結果を生成
         assert qrels["0"] == {"doc1": 1, "doc2": 1}  # 1,2位のdocの関連度が1
-        assert qrels["1"] == {"doc5": 1, "doc6": 1, "doc7": 1}  # 3,4,5位のdocの関連度が1
+        assert qrels["1"] == {
+            "doc5": 1,
+            "doc6": 1,
+            "doc7": 1,
+        }  # 3,4,5位のdocの関連度が1
 
 
 class TestCalculateRetrievalMetrics:
@@ -98,6 +113,7 @@ class TestCalculateRetrievalMetrics:
         assert results["hit_rate@1"] == 0
         assert results["hit_rate@2"] == 0.5
         assert results["hit_rate@3"] == 1
+
 
 class TestGetSupportedMetrics:
     """Test get_supported_metrics function."""

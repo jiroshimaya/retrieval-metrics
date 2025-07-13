@@ -11,7 +11,6 @@ def _ranks_to_run_qrels(ranks_list):
         qrels[str(qid)] = {}
         max_rank = max(ranks) if ranks else 0
 
-        
         for doc_id in range(1, max_rank + 1):
             # runを作る。doc_idは1からmax_rankまでで、doc1が1位でdoc{max_rank}が最下位
             run[str(qid)][f"doc{doc_id}"] = max_rank + 1 - doc_id
@@ -21,7 +20,7 @@ def _ranks_to_run_qrels(ranks_list):
         # -1の文書をdummyとしてqrels二追加
         # ranksの中の-1の個数を数える
         out_of_ranks_count = ranks.count(-1)
-        for i in range(1, out_of_ranks_count+1):
+        for i in range(1, out_of_ranks_count + 1):
             # runには含まれないが、qrelsには関連性1の文書を追加
             qrels[str(qid)][f"doc{max_rank + i}"] = 1
 
