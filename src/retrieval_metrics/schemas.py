@@ -1,1 +1,1 @@
-"""Common schema definitions for the project."""
+"""Simple type definitions for retrieval metrics."""
