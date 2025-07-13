@@ -71,6 +71,8 @@ class TestRanksToRunQrels:
         assert run["1"] == {}
         assert qrels["0"] == {"doc1": 1, "doc2": 1, "doc3": 1}
         assert qrels["1"] == {"doc1": 1, "doc2": 1, "doc3": 1}
+
+
 class TestCalculateRetrievalMetrics:
     """Test calculate_retrieval_metrics function."""
 

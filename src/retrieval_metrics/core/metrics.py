@@ -33,7 +33,8 @@ def _ranks_to_run_qrels(
     for qid, ranks in enumerate(ranks_list):
         run[str(qid)] = {}
         qrels[str(qid)] = {}
-        max_rank = max(ranks) if k < 0 else min(max(max(ranks), 0), k)
+        ranks_max = max(ranks)
+        max_rank = ranks_max if k < 0 else min(max(ranks_max, 0), k)
 
         for doc_id in range(1, max_rank + 1):
             # runを作る。doc_idは1からmax_rankまでで、doc1が1位でdoc{max_rank}が最下位
